@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grille d'observation pédagogique – Diagnostic mathématiques</title>
+<style>
+  :root { --ink:#17324d; --green:#176b5b; --line:#d5dee7; --soft:#f3f6f9; --muted:#5d6b79; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:#eef2f6; color:#263442; font:15px/1.45 Arial, sans-serif; }
+  .page { max-width:1050px; margin:28px auto; padding:28px; background:#fff; box-shadow:0 4px 22px #14283b18; border-radius:12px; }
+  h1 { margin:0; text-align:center; color:var(--ink); font-size:25px; }
+  .subtitle { text-align:center; color:var(--muted); margin:7px 0 22px; }
+  h2 { color:var(--green); font-size:18px; margin:24px 0 10px; border-bottom:1px solid var(--line); padding-bottom:6px; }
+  .meta { display:grid; grid-template-columns:2fr 1fr; gap:12px; background:var(--soft); padding:14px; border:1px solid var(--line); border-radius:8px; }
+  label.field { display:block; font-weight:700; color:var(--ink); font-size:13px; }
+  input[type=text], input[type=date], textarea, select { width:100%; margin-top:5px; padding:9px 10px; border:1px solid #bdc9d5; border-radius:6px; font:inherit; background:white; color:#263442; }
+  .note { background:#f1f6fa; border-left:4px solid #7a9bb7; padding:11px 13px; margin:14px 0; color:#405365; border-radius:4px; }
+  .table-wrap { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; margin:8px 0 15px; }
+  th,td { border:1px solid var(--line); padding:9px 8px; text-align:left; vertical-align:middle; }
+  th { background:#eaf1f6; color:var(--ink); font-size:13px; }
+  td { font-size:14px; }
+  td.center, th.center { text-align:center; }
+  input[type=checkbox], input[type=radio] { width:18px; height:18px; accent-color:var(--green); cursor:pointer; vertical-align:middle; }
+  .checks { display:flex; flex-wrap:wrap; gap:10px 18px; }
+  .checks label { display:flex; align-items:center; gap:6px; }
+  textarea { min-height:90px; resize:vertical; }
+  .actions { display:flex; flex-wrap:wrap; gap:10px; margin:18px 0 0; }
+  button { border:0; border-radius:7px; padding:11px 16px; cursor:pointer; font-weight:700; font-size:14px; }
+  .primary { background:var(--green); color:white; }
+  .secondary { background:#e8eef3; color:var(--ink); }
+  .danger { background:#fbeaea; color:#8b2525; }
+  .small { color:var(--muted); font-size:12px; }
+  .status { margin-left:auto; align-self:center; color:var(--green); font-size:13px; }
+  @media (max-width:650px) {
+    .page { margin:0; padding:17px 12px; border-radius:0; }
+    h1 { font-size:21px; }
+    .meta { grid-template-columns:1fr; }
+    th,td { padding:7px 6px; font-size:12px; }
+  }
+  @media print {
+    body { background:white; }
+    .page { margin:0; padding:8mm; max-width:none; box-shadow:none; border-radius:0; }
+    .actions,.status,.small.print-hide { display:none !important; }
+    input[type=text],input[type=date],textarea,select { border:0; border-bottom:1px solid #aaa; border-radius:0; padding:4px; }
+    textarea { min-height:65px; }
+    h2 { break-after:avoid; }
+    table { break-inside:avoid; }
+    .page { font-size:11px; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+  <h1>GRILLE D’OBSERVATION PÉDAGOGIQUE</h1>
+  <div class="subtitle">Diagnostic de positionnement en mathématiques · Programme québécois · Secondaire</div>
+
+  <section class="meta">
+    <label class="field">Nom de l’élève
+      <input type="text" data-save="eleve" placeholder="Nom et prénom">
+    </label>
+    <label class="field">Date
+      <input type="date" data-save="date">
+    </label>
+    <label class="field">Année / niveau
+      <input type="text" data-save="niveau" placeholder="Ex. : Secondaire 2">
+    </label>
+    <label class="field">Durée
+      <input type="text" data-save="duree" placeholder="Ex. : 30 minutes">
+    </label>
+  </section>
+
+  <div class="note"><strong>Mode d’emploi :</strong> coche une appréciation par compétence. Note les erreurs et les stratégies observées. En visioconférence, demande à l’élève de verbaliser ses étapes. Une erreur isolée ne suffit pas à conclure à une lacune.</div>
+
+  <h2>1. Observations par exercice</h2>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Ex.</th><th>Compétence observée</th><th class="center">Acquis</th><th class="center">Fragile</th><th class="center">Non acquis</th><th class="center">Non évalué</th></tr></thead>
+    <tbody>
+      <tr><td>1a–b</td><td>Réduction : regroupe les termes de même nature</td><td class="center"><input type="radio" name="ex1ab" value="Acquis"></td><td class="center"><input type="radio" name="ex1ab" value="Fragile"></td><td class="center"><input type="radio" name="ex1ab" value="Non acquis"></td><td class="center"><input type="radio" name="ex1ab" value="Non évalué"></td></tr>
+      <tr><td>1c–d</td><td>Distributivité : multiplie chaque terme</td><td class="center"><input type="radio" name="ex1cd" value="Acquis"></td><td class="center"><input type="radio" name="ex1cd" value="Fragile"></td><td class="center"><input type="radio" name="ex1cd" value="Non acquis"></td><td class="center"><input type="radio" name="ex1cd" value="Non évalué"></td></tr>
+      <tr><td>2</td><td>Développe puis réduit une expression</td><td class="center"><input type="radio" name="ex2" value="Acquis"></td><td class="center"><input type="radio" name="ex2" value="Fragile"></td><td class="center"><input type="radio" name="ex2" value="Non acquis"></td><td class="center"><input type="radio" name="ex2" value="Non évalué"></td></tr>
+      <tr><td>3</td><td>Résout une équation simple et isole x</td><td class="center"><input type="radio" name="ex3" value="Acquis"></td><td class="center"><input type="radio" name="ex3" value="Fragile"></td><td class="center"><input type="radio" name="ex3" value="Non acquis"></td><td class="center"><input type="radio" name="ex3" value="Non évalué"></td></tr>
+      <tr><td>4</td><td>Gère les parenthèses et vérifie la solution</td><td class="center"><input type="radio" name="ex4" value="Acquis"></td><td class="center"><input type="radio" name="ex4" value="Fragile"></td><td class="center"><input type="radio" name="ex4" value="Non acquis"></td><td class="center"><input type="radio" name="ex4" value="Non évalué"></td></tr>
+      <tr><td>5</td><td>Comprend l’inconnue et les transformations d’une égalité</td><td class="center"><input type="radio" name="ex5" value="Acquis"></td><td class="center"><input type="radio" name="ex5" value="Fragile"></td><td class="center"><input type="radio" name="ex5" value="Non acquis"></td><td class="center"><input type="radio" name="ex5" value="Non évalué"></td></tr>
+      <tr><td>6</td><td>Calcule une image en remplaçant x</td><td class="center"><input type="radio" name="ex6" value="Acquis"></td><td class="center"><input type="radio" name="ex6" value="Fragile"></td><td class="center"><input type="radio" name="ex6" value="Non acquis"></td><td class="center"><input type="radio" name="ex6" value="Non évalué"></td></tr>
+      <tr><td>7</td><td>Distingue image et antécédent</td><td class="center"><input type="radio" name="ex7" value="Acquis"></td><td class="center"><input type="radio" name="ex7" value="Fragile"></td><td class="center"><input type="radio" name="ex7" value="Non acquis"></td><td class="center"><input type="radio" name="ex7" value="Non évalué"></td></tr>
+      <tr><td>8</td><td>Complète un tableau de valeurs</td><td class="center"><input type="radio" name="ex8" value="Acquis"></td><td class="center"><input type="radio" name="ex8" value="Fragile"></td><td class="center"><input type="radio" name="ex8" value="Non acquis"></td><td class="center"><input type="radio" name="ex8" value="Non évalué"></td></tr>
+      <tr><td>9</td><td>Interprète des points et le sens de variation d’une droite</td><td class="center"><input type="radio" name="ex9" value="Acquis"></td><td class="center"><input type="radio" name="ex9" value="Fragile"></td><td class="center"><input type="radio" name="ex9" value="Non acquis"></td><td class="center"><input type="radio" name="ex9" value="Non évalué"></td></tr>
+      <tr><td>10</td><td>Traduit une situation en fonction puis résout</td><td class="center"><input type="radio" name="ex10" value="Acquis"></td><td class="center"><input type="radio" name="ex10" value="Fragile"></td><td class="center"><input type="radio" name="ex10" value="Non acquis"></td><td class="center"><input type="radio" name="ex10" value="Non évalué"></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2>2. Stratégies et autonomie</h2>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Comportement observé</th><th class="center">Oui</th><th class="center">Parfois</th><th class="center">Non</th></tr></thead>
+    <tbody>
+      <tr><td>Explique spontanément son raisonnement</td><td class="center"><input type="radio" name="st1" value="Oui"></td><td class="center"><input type="radio" name="st1" value="Parfois"></td><td class="center"><input type="radio" name="st1" value="Non"></td></tr>
+      <tr><td>Comprend la consigne sans reformulation</td><td class="center"><input type="radio" name="st2" value="Oui"></td><td class="center"><input type="radio" name="st2" value="Parfois"></td><td class="center"><input type="radio" name="st2" value="Non"></td></tr>
+      <tr><td>Choisit une méthode adaptée</td><td class="center"><input type="radio" name="st3" value="Oui"></td><td class="center"><input type="radio" name="st3" value="Parfois"></td><td class="center"><input type="radio" name="st3" value="Non"></td></tr>
+      <tr><td>Organise les étapes dans un ordre cohérent</td><td class="center"><input type="radio" name="st4" value="Oui"></td><td class="center"><input type="radio" name="st4" value="Parfois"></td><td class="center"><input type="radio" name="st4" value="Non"></td></tr>
+      <tr><td>Repère ou corrige une erreur après vérification</td><td class="center"><input type="radio" name="st5" value="Oui"></td><td class="center"><input type="radio" name="st5" value="Parfois"></td><td class="center"><input type="radio" name="st5" value="Non"></td></tr>
+      <tr><td>Persévère lorsqu’il rencontre une difficulté</td><td class="center"><input type="radio" name="st6" value="Oui"></td><td class="center"><input type="radio" name="st6" value="Parfois"></td><td class="center"><input type="radio" name="st6" value="Non"></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2>3. Types d’erreurs à repérer</h2>
+  <table>
+    <thead><tr><th>Type d’erreur</th><th class="center">Observée</th><th>Exemple / commentaire</th></tr></thead>
+    <tbody>
+      <tr><td>Erreurs de signes (+ / −)</td><td class="center"><input type="checkbox" data-save="err1"></td><td><input type="text" data-save="err1note" aria-label="Commentaire erreurs de signes"></td></tr>
+      <tr><td>Confusion entre termes semblables et non semblables</td><td class="center"><input type="checkbox" data-save="err2"></td><td><input type="text" data-save="err2note" aria-label="Commentaire termes"></td></tr>
+      <tr><td>Distributivité incomplète</td><td class="center"><input type="checkbox" data-save="err3"></td><td><input type="text" data-save="err3note" aria-label="Commentaire distributivité"></td></tr>
+      <tr><td>Opération appliquée à un seul membre de l’équation</td><td class="center"><input type="checkbox" data-save="err4"></td><td><input type="text" data-save="err4note" aria-label="Commentaire égalité"></td></tr>
+      <tr><td>Difficulté à isoler l’inconnue</td><td class="center"><input type="checkbox" data-save="err5"></td><td><input type="text" data-save="err5note" aria-label="Commentaire inconnue"></td></tr>
+      <tr><td>Confusion entre f(x), image et antécédent</td><td class="center"><input type="checkbox" data-save="err6"></td><td><input type="text" data-save="err6note" aria-label="Commentaire fonctions"></td></tr>
+      <tr><td>Erreur de substitution ou de calcul d’image</td><td class="center"><input type="checkbox" data-save="err7"></td><td><input type="text" data-save="err7note" aria-label="Commentaire substitution"></td></tr>
+      <tr><td>Difficulté à traduire un énoncé en formule</td><td class="center"><input type="checkbox" data-save="err8"></td><td><input type="text" data-save="err8note" aria-label="Commentaire modélisation"></td></tr>
+    </tbody>
+  </table>
+
+  <h2>4. Synthèse des acquis</h2>
+  <table>
+    <thead><tr><th>Domaine</th><th>Points forts / acquis</th><th>À consolider</th><th>Priorité</th></tr></thead>
+    <tbody>
+      <tr><td>Calcul numérique</td><td><input type="text" data-save="syn1a"></td><td><input type="text" data-save="syn1b"></td><td><select data-save="syn1c"><option value="">—</option><option>Haute</option><option>Moyenne</option><option>Basse</option></select></td></tr>
+      <tr><td>Calcul littéral</td><td><input type="text" data-save="syn2a"></td><td><input type="text" data-save="syn2b"></td><td><select data-save="syn2c"><option value="">—</option><option>Haute</option><option>Moyenne</option><option>Basse</option></select></td></tr>
+      <tr><td>Équations</td><td><input type="text" data-save="syn3a"></td><td><input type="text" data-save="syn3b"></td><td><select data-save="syn3c"><option value="">—</option><option>Haute</option><option>Moyenne</option><option>Basse</option></select></td></tr>
+      <tr><td>Fonctions / tableaux</td><td><input type="text" data-save="syn4a"></td><td><input type="text" data-save="syn4b"></td><td><select data-save="syn4c"><option value="">—</option><option>Haute</option><option>Moyenne</option><option>Basse</option></select></td></tr>
+      <tr><td>Graphiques / problèmes</td><td><input type="text" data-save="syn5a"></td><td><input type="text" data-save="syn5b"></td><td><select data-save="syn5c"><option value="">—</option><option>Haute</option><option>Moyenne</option><option>Basse</option></select></td></tr>
+    </tbody>
+  </table>
+
+  <h2>5. Observations et exemples précis</h2>
+  <label class="field">Noter une réponse, une erreur ou une explication entendue
+    <textarea data-save="observations" placeholder="Ex. : comprend l'idée de l'équation mais effectue les opérations sur un seul membre..."></textarea>
+  </label>
+
+  <h2>6. Plan de remédiation proposé</h2>
+  <table>
+    <thead><tr><th>Ordre</th><th>Notion à travailler</th><th>Objectif / indicateur de progrès</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><input type="text" data-save="plan1a"></td><td><input type="text" data-save="plan1b"></td></tr>
+      <tr><td>2</td><td><input type="text" data-save="plan2a"></td><td><input type="text" data-save="plan2b"></td></tr>
+      <tr><td>3</td><td><input type="text" data-save="plan3a"></td><td><input type="text" data-save="plan3b"></td></tr>
+      <tr><td>4</td><td><input type="text" data-save="plan4a"></td><td><input type="text" data-save="plan4b"></td></tr>
+    </tbody>
+  </table>
+
+  <h2>7. Retour à faire au parent</h2>
+  <label class="field">Forces observées<textarea data-save="parent1" placeholder="Points d'appui de l'élève..."></textarea></label><br>
+  <label class="field">Deux priorités de travail<textarea data-save="parent2" placeholder="Notions à reprendre en priorité..."></textarea></label><br>
+  <label class="field">Prochaine étape / fréquence proposée<textarea data-save="parent3" placeholder="Organisation proposée et suivi..."></textarea></label>
+
+  <div class="note"><strong>Rappel :</strong> cette grille oriente l’accompagnement ; elle ne constitue pas un diagnostic définitif. Tenir compte de l’année scolaire, des notions déjà étudiées et des conditions de passation à distance.</div>
+  <div class="actions print-hide">
+    <button class="primary" onclick="window.print()">Imprimer / Enregistrer en PDF</button>
+    <button class="secondary" onclick="exportData()">Exporter les réponses (.json)</button>
+    <button class="danger" onclick="clearForm()">Effacer la grille</button>
+    <span class="status" id="status">Remplissage sauvegardé automatiquement dans ce navigateur.</span>
+  </div>
+  <p class="small print-hide">Conseil : garde ce fichier sur ton ordinateur et ouvre-le avec ton navigateur. Les champs sont modifiables et les cases à cocher restent enregistrées dans le même navigateur sur cet appareil.</p>
+</main>
+<script>
+(function(){
+  const KEY = "grille_observation_diagnostic_math_v1";
+  const fields = [...document.querySelectorAll("[data-save]")];
+  function save() {
+    const data = {};
+    fields.forEach(el => data[el.dataset.save] = el.type === "checkbox" ? el.checked : el.value);
+    try { localStorage.setItem(KEY, JSON.stringify(data)); }
+    catch(e) { document.getElementById("status").textContent = "Sauvegarde automatique indisponible."; }
+  }
+  function restore() {
+    try {
+      const data = JSON.parse(localStorage.getItem(KEY) || "{}");
+      fields.forEach(el => {
+        if (!(el.dataset.save in data)) return;
+        if (el.type === "checkbox") el.checked = !!data[el.dataset.save];
+        else el.value = data[el.dataset.save];
+      });
+    } catch(e) {}
+  }
+  window.clearForm = function() {
+    if (!confirm("Effacer toutes les réponses de cette grille ?")) return;
+    fields.forEach(el => {
+      if (el.type === "checkbox" || el.type === "radio") el.checked = false;
+      else el.value = "";
+    });
+    localStorage.removeItem(KEY);
+    document.getElementById("status").textContent = "Grille réinitialisée.";
+  };
+  window.exportData = function() {
+    const data = {};
+    fields.forEach(el => {
+      if (el.type === "radio") {
+        if (el.checked) data[el.name] = el.value;
+      } else data[el.dataset.save] = el.type === "checkbox" ? el.checked : el.value;
+    });
+    const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "grille_observation_reponses.json";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
+  restore();
+  fields.forEach(el => el.addEventListener("change", save));
+  fields.forEach(el => el.addEventListener("input", save));
+  document.querySelectorAll('input[type="radio"]').forEach(el => el.addEventListener("change", save));
+})();
+</script>
+</body>
+</html>
