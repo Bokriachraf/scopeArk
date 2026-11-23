@@ -72,6 +72,19 @@ export interface EvaluateRequest {
   answers: AnswerInput[];
 }
 
+/** Suivi en direct du test, envoyé de l'élève vers le prof dans une salle. */
+export interface LiveProgress {
+  name?: string;
+  age: number;
+  index: number;
+  total: number;
+  statement: string;
+  /** undefined = pas encore répondu, null = « Je ne sais pas » */
+  chosen?: string | null;
+  answered: number;
+  finished?: boolean;
+}
+
 export type Rating = "Acquis" | "Fragile" | "Non acquis";
 export type Priority = "Haute" | "Moyenne" | "Basse";
 

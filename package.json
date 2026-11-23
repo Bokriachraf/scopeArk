@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
     "katex": "^0.16.11",
     "next": "^15.1.0",
     "react": "^19.0.0",

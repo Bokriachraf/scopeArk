@@ -14,7 +14,13 @@ function fmtDuration(sec: number) {
   return m > 0 ? `${m} min ${s.toString().padStart(2, "0")} s` : `${s} s`;
 }
 
-export default function ReportView({ report }: { report: Report }) {
+export default function ReportView({
+  report,
+  embedded = false,
+}: {
+  report: Report;
+  embedded?: boolean;
+}) {
   const [notes, setNotes] = useState("");
   const [forces, setForces] = useState(report.parent.forces);
   const [priorites, setPriorites] = useState(report.parent.priorites);
@@ -48,7 +54,7 @@ export default function ReportView({ report }: { report: Report }) {
   const info = BAND_INFO[report.band];
 
   return (
-    <main className="page">
+    <main className={embedded ? "page embedded" : "page"}>
       <h1>RAPPORT DE DIAGNOSTIC</h1>
       <div className="subtitle">
         Diagnostic de positionnement en mathématiques · Programme québécois · {info.label}
@@ -297,9 +303,11 @@ export default function ReportView({ report }: { report: Report }) {
         <button className="secondary" onClick={exportJson}>
           Exporter (.json)
         </button>
-        <Link href="/" className="btn-link">
-          Nouveau test
-        </Link>
+        {!embedded && (
+          <Link href="/" className="btn-link">
+            Nouveau test
+          </Link>
+        )}
         <span className="status">{status}</span>
       </div>
     </main>

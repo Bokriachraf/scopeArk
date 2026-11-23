@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "katex/dist/katex.min.css";
 import "./globals.css";
+import "./room.css";
 
 export const metadata: Metadata = {
   title: "ScopeArk · Diagnostic de mathématiques",

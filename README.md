@@ -76,6 +76,29 @@ lib/
   types.ts
 ```
 
+## Séance avec un prof (tableau partagé, gratuit)
+
+Depuis l'accueil, « Séance avec un prof » crée une **salle** : un lien prof et un lien élève
+(`/salle/CODE?r=prof` et `/salle/CODE`). Écran divisé : tableau à gauche, test (élève) ou suivi en
+direct (prof) à droite. Prof et élève dessinent en même temps ; le rapport arrive chez le prof
+dès la fin du test.
+
+La synchronisation passe par **Supabase Realtime (Broadcast + Presence)**, plan gratuit.
+Aucune table, aucune base de données : le tableau vit dans les navigateurs et disparaît quand
+tout le monde quitte la salle.
+
+Configuration :
+
+1. Créer un projet gratuit sur https://supabase.com (aucune table à créer).
+2. *Project Settings > API* : copier l'URL et la clé `anon` (ou `publishable`).
+3. Copier `.env.example` en `.env.local` et remplir les deux valeurs, puis redémarrer `npm run dev`.
+4. Sur Vercel : *Settings > Environment Variables*, mêmes noms, puis redéployer.
+5. Si la connexion échoue, vérifier dans *Realtime Settings* que l'accès public aux canaux est activé.
+
+Limites : le plan gratuit limite le nombre de connexions et de messages par seconde pour tout
+le projet. Les traits sont donc envoyés par paquets toutes les 100 ms, ce qui reste très large
+pour un tuteur. Le rôle (prof/élève) est déterminé par le lien : il n'y a pas d'authentification.
+
 ## Limites connues
 
 - Un QCM permet de deviner : l'option « Je ne sais pas » et les distracteurs plausibles limitent

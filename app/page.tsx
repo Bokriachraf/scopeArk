@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { BAND_INFO, bandForAge } from "@/lib/meta";
@@ -72,6 +73,9 @@ export default function Home() {
           <button className="primary" type="submit" disabled={!age}>
             Commencer le test
           </button>
+          <Link href="/salle" className="btn-link">
+            Séance avec un prof (tableau partagé)
+          </Link>
         </div>
       </form>
     </main>
