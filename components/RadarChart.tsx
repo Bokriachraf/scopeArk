@@ -4,11 +4,12 @@ type Point = { label: string; value: number };
 
 /** Graphique radar en SVG pur (valeurs de 0 à 100). */
 export default function RadarChart({ data }: { data: Point[] }) {
-  const W = 420;
-  const H = 330;
+  // Grande zone avec marges latérales : les étiquettes ne sont plus coupées.
+  const W = 560;
+  const H = 380;
   const cx = W / 2;
-  const cy = H / 2 + 5;
-  const R = 105;
+  const cy = H / 2 + 6;
+  const R = 112;
   const n = data.length;
 
   const angle = (i: number) => -Math.PI / 2 + (2 * Math.PI * i) / n;
@@ -19,12 +20,18 @@ export default function RadarChart({ data }: { data: Point[] }) {
   const poly = (vals: number[]) => vals.map((v, i) => pt(i, v).join(",")).join(" ");
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Radar des domaines" className="radar">
+    <svg
+      viewBox={`0 0 ${W} ${H}`}
+      role="img"
+      aria-label="Radar des domaines"
+      className="radar"
+      overflow="visible"
+    >
       {[25, 50, 75, 100].map((ring) => (
         <polygon
           key={ring}
           points={poly(data.map(() => ring))}
-          fill="none"
+          fill={ring === 100 ? "#f7fafc" : "none"}
           stroke="#d5dee7"
           strokeWidth={1}
         />
@@ -35,29 +42,27 @@ export default function RadarChart({ data }: { data: Point[] }) {
       })}
       <polygon
         points={poly(data.map((d) => d.value))}
-        fill="rgba(23,107,91,0.25)"
-        stroke="#176b5b"
-        strokeWidth={2}
+        fill="rgba(21,122,104,0.22)"
+        stroke="#157a68"
+        strokeWidth={2.5}
+        strokeLinejoin="round"
       />
       {data.map((d, i) => {
         const [x, y] = pt(i, d.value);
-        return <circle key={i} cx={x} cy={y} r={4} fill="#176b5b" />;
+        return <circle key={i} cx={x} cy={y} r={4.5} fill="#157a68" stroke="#fff" strokeWidth={2} />;
       })}
       {data.map((d, i) => {
-        const [x, y] = pt(i, 128);
-        const anchor = Math.abs(x - cx) < 8 ? "middle" : x > cx ? "start" : "end";
+        const [x, y] = pt(i, 126);
+        const dx = x - cx;
+        const anchor = Math.abs(dx) < 10 ? "middle" : dx > 0 ? "start" : "end";
         return (
-          <text
-            key={d.label}
-            x={x}
-            y={y}
-            textAnchor={anchor}
-            dominantBaseline="middle"
-            fontSize={13}
-            fill="#17324d"
-            fontWeight={700}
-          >
-            {d.label} {d.value}%
+          <text key={d.label} x={x} y={y} textAnchor={anchor} fontSize={14} fill="#14304a">
+            <tspan x={x} fontWeight={700}>
+              {d.label}
+            </tspan>
+            <tspan x={x} dy="1.3em" fill="#5d6b79">
+              {d.value} %
+            </tspan>
           </text>
         );
       })}

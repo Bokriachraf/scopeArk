@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import MathText from "./MathText";
+import { DOMAIN_LABELS } from "@/lib/meta";
 import type { LiveProgress, PublicQuestion, Report } from "@/lib/types";
 
 export type Profile = { name: string; age: number };
@@ -185,6 +186,32 @@ export default function TestRunner({ profile, storagePrefix, onProgress, onFinis
     }
   }
 
+  // Raccourcis clavier : A à D pour répondre, flèches pour naviguer
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (!questions.length || submitting) return;
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      const tag = (e.target as HTMLElement | null)?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA") return;
+      const q = questions[index];
+      const k = e.key.toLowerCase();
+      const i = k.length === 1 ? "abcd".indexOf(k) : -1;
+      if (i >= 0 && i < q.options.length) {
+        choose(q.id, q.options[i].id);
+      } else if (k === "arrowleft" && index > 0) {
+        go(-1);
+      } else if (
+        k === "arrowright" &&
+        answers[q.id]?.optionId !== undefined &&
+        index < questions.length - 1
+      ) {
+        go(1);
+      }
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  });
+
   if (loadError) return <p className="bad">{loadError}</p>;
   if (questions.length === 0) return <p>Chargement…</p>;
 
@@ -202,8 +229,11 @@ export default function TestRunner({ profile, storagePrefix, onProgress, onFinis
           style={{ width: `${(answeredCount / questions.length) * 100}%` }}
         />
       </div>
-      <div className="small">
-        Question {index + 1} sur {questions.length}
+      <div className="q-meta">
+        <span className="small">
+          Question {index + 1} sur {questions.length}
+        </span>
+        <span className="chip chip-domain">{DOMAIN_LABELS[q.domain]}</span>
       </div>
 
       <h2 className="question">
@@ -234,6 +264,7 @@ export default function TestRunner({ profile, storagePrefix, onProgress, onFinis
           Je ne sais pas
         </button>
       </div>
+      <p className="small hint">Astuce : touches A à D pour répondre, flèches ← → pour naviguer.</p>
 
       {submitError && <p className="bad">{submitError}</p>}
 

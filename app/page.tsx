@@ -25,59 +25,84 @@ export default function Home() {
   const band = age ? bandForAge(age) : null;
 
   return (
-    <main className="page narrow">
-      <h1>Diagnostic de mathématiques</h1>
-      <div className="subtitle">Programme québécois · Secondaire · 12 à 17 ans</div>
+    <main className="home">
+      <section className="hero">
+        <h1>Diagnostic de mathématiques</h1>
+        <p>
+          Un court test adapté à ton âge pour repérer tes points forts et les notions à travailler.
+          Programme québécois, secondaire.
+        </p>
+        <ul className="pills">
+          <li>10 questions à choix</li>
+          <li>15 à 25 minutes</li>
+          <li>Sans compte</li>
+          <li>Rien n'est enregistré</li>
+        </ul>
+      </section>
 
-      <div className="note">
-        10 questions à choix multiples, environ 15 à 25 minutes. Aucun compte n'est nécessaire et
-        rien n'est enregistré sur un serveur. Choisis la réponse qui te semble juste, ou « Je ne
-        sais pas » si tu n'es pas sûr : c'est utile pour comprendre où t'aider.
-      </div>
+      <div className="cards">
+        <form className="card" onSubmit={start}>
+          <h2>Passer le test seul</h2>
 
-      <form onSubmit={start}>
-        <label className="field">
-          Prénom (facultatif)
-          <input
-            type="text"
-            value={name}
-            maxLength={60}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Ton prénom"
-          />
-        </label>
+          <label className="field">
+            Prénom (facultatif)
+            <input
+              type="text"
+              value={name}
+              maxLength={60}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Ton prénom"
+              autoComplete="given-name"
+            />
+          </label>
 
-        <div className="field">
-          Ton âge
-          <div className="age-grid">
-            {AGES.map((a) => (
-              <button
-                type="button"
-                key={a}
-                className={`age ${age === a ? "selected" : ""}`}
-                onClick={() => setAge(a)}
-                aria-pressed={age === a}
-              >
-                {a} ans
-              </button>
-            ))}
-          </div>
-          {band && (
-            <div className="small">
-              Niveau du test : {BAND_INFO[band].label} ({BAND_INFO[band].ages})
+          <div className="field">
+            Ton âge
+            <div className="age-grid">
+              {AGES.map((a) => (
+                <button
+                  type="button"
+                  key={a}
+                  className={`age ${age === a ? "selected" : ""}`}
+                  onClick={() => setAge(a)}
+                  aria-pressed={age === a}
+                >
+                  {a} ans
+                </button>
+              ))}
             </div>
-          )}
-        </div>
+            {band && (
+              <div className="small" style={{ marginTop: 8 }}>
+                Niveau du test : {BAND_INFO[band].label} ({BAND_INFO[band].ages})
+              </div>
+            )}
+          </div>
 
-        <div className="actions">
-          <button className="primary" type="submit" disabled={!age}>
-            Commencer le test
-          </button>
+          <div className="note">
+            Choisis la réponse qui te semble juste, ou « Je ne sais pas » si tu n'es pas sûr :
+            c'est utile pour comprendre où t'aider.
+          </div>
+
+          <div className="actions">
+            <button className="primary" type="submit" disabled={!age}>
+              Commencer le test
+            </button>
+          </div>
+        </form>
+
+        <aside className="card card-side">
+          <h2>Séance avec un prof</h2>
+          <p>Travaillez ensemble sur un tableau partagé, en direct.</p>
+          <ul>
+            <li>Le prof et l'élève écrivent en même temps</li>
+            <li>Le prof suit le test question par question</li>
+            <li>Le rapport arrive chez le prof dès la fin</li>
+          </ul>
           <Link href="/salle" className="btn-link">
-            Séance avec un prof (tableau partagé)
+            Créer une salle
           </Link>
-        </div>
-      </form>
+        </aside>
+      </div>
     </main>
   );
 }

@@ -59,9 +59,9 @@
 
 .pane {
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 22px #14283b18;
-  padding: 14px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
 }
 .side-pane {
   max-height: calc(100vh - 90px);
@@ -135,9 +135,21 @@
   box-shadow: none;
   border-radius: 0;
 }
-.page.embedded .meta,
+.page.embedded {
+  animation: none;
+}
+.page.embedded h1 {
+  font-size: 20px;
+}
+.page.embedded .meta {
+  grid-template-columns: 1fr 1fr;
+}
 .page.embedded .summary {
   grid-template-columns: 1fr;
+}
+.page.embedded .ring {
+  width: 120px;
+  height: 120px;
 }
 
 @media (max-width: 900px) {

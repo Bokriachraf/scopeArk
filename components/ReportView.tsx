@@ -6,12 +6,47 @@ import MathText from "./MathText";
 import RadarChart from "./RadarChart";
 import { BAND_INFO, DOMAIN_SHORT } from "@/lib/meta";
 import { encodeReport } from "@/lib/share";
-import type { Report } from "@/lib/types";
+import type { Rating, Report } from "@/lib/types";
+
+const RATING_CLASS: Record<Rating, string> = {
+  Acquis: "chip-ok",
+  Fragile: "chip-mid",
+  "Non acquis": "chip-bad",
+};
+const VALUE_CLASS = { Oui: "chip-ok", Parfois: "chip-mid", Non: "chip-bad" } as const;
+const BAR_CLASS: Record<Rating, string> = { Acquis: "ok", Fragile: "mid", "Non acquis": "bad" };
 
 function fmtDuration(sec: number) {
   const m = Math.floor(sec / 60);
   const s = sec % 60;
   return m > 0 ? `${m} min ${s.toString().padStart(2, "0")} s` : `${s} s`;
+}
+
+function ScoreRing({ percent, correct, total }: { percent: number; correct: number; total: number }) {
+  const r = 52;
+  const c = 2 * Math.PI * r;
+  return (
+    <svg viewBox="0 0 140 140" className="ring" role="img" aria-label={`Score ${correct} sur ${total}`}>
+      <circle cx="70" cy="70" r={r} fill="none" stroke="#e3ebf1" strokeWidth="12" />
+      <circle
+        cx="70"
+        cy="70"
+        r={r}
+        fill="none"
+        stroke="#157a68"
+        strokeWidth="12"
+        strokeLinecap="round"
+        strokeDasharray={`${(percent / 100) * c} ${c}`}
+        transform="rotate(-90 70 70)"
+      />
+      <text x="70" y="70" textAnchor="middle" fontSize="30" fontWeight="800" fill="#14304a">
+        {correct}/{total}
+      </text>
+      <text x="70" y="92" textAnchor="middle" fontSize="13" fill="#5d6b79">
+        {percent} %
+      </text>
+    </svg>
+  );
 }
 
 export default function ReportView({
@@ -55,37 +90,63 @@ export default function ReportView({
 
   return (
     <main className={embedded ? "page embedded" : "page"}>
-      <h1>RAPPORT DE DIAGNOSTIC</h1>
+      <h1>Rapport de diagnostic</h1>
       <div className="subtitle">
-        Diagnostic de positionnement en mathématiques · Programme québécois · {info.label}
+        Mathématiques · Programme québécois · {info.label}
       </div>
 
       <section className="meta">
         <div>
-          <strong>Élève :</strong> {report.name || "—"}
+          <strong>Élève</strong>
+          {report.name || "—"}
         </div>
         <div>
-          <strong>Date :</strong> {new Date(report.generatedAt).toLocaleDateString("fr-CA")}
+          <strong>Date</strong>
+          {new Date(report.generatedAt).toLocaleDateString("fr-CA")}
         </div>
         <div>
-          <strong>Âge / niveau :</strong> {report.age} ans · {info.label}
+          <strong>Âge / niveau</strong>
+          {report.age} ans · {info.label}
         </div>
         <div>
-          <strong>Durée :</strong> {fmtDuration(report.durationSec)}
+          <strong>Durée</strong>
+          {fmtDuration(report.durationSec)}
         </div>
       </section>
 
       <section className="summary">
         <div className="score">
-          <div className="score-num">
-            {report.score.correct}/{report.score.total}
-          </div>
+          <ScoreRing
+            percent={report.score.percent}
+            correct={report.score.correct}
+            total={report.score.total}
+          />
           <div className="score-label">{report.levelLabel}</div>
         </div>
         <RadarChart
           data={report.domains.map((d) => ({ label: DOMAIN_SHORT[d.domain], value: d.percent }))}
         />
       </section>
+
+      <div className="dbars">
+        {report.domains.map((d) => (
+          <div className="dbar" key={d.domain}>
+            <div className="dbar-top">
+              <span>{d.label}</span>
+              <span>
+                {d.correct}/{d.total}
+              </span>
+            </div>
+            <div className="dbar-track">
+              <div
+                className={`dbar-fill ${BAR_CLASS[d.rating]}`}
+                style={{ width: `${Math.max(d.percent, 4)}%` }}
+              />
+            </div>
+            <span className={`chip ${RATING_CLASS[d.rating]}`}>{d.rating}</span>
+          </div>
+        ))}
+      </div>
 
       <div className="note">
         <strong>À lire :</strong> ce rapport est calculé automatiquement à partir des réponses du
@@ -101,20 +162,20 @@ export default function ReportView({
             <tr>
               <th>Ex.</th>
               <th>Compétence observée</th>
-              <th className="center">Acquis</th>
-              <th className="center">Fragile</th>
-              <th className="center">Non acquis</th>
+              <th className="center">Appréciation</th>
               <th>Réponse de l'élève</th>
             </tr>
           </thead>
           <tbody>
             {report.results.map((r, i) => (
               <tr key={r.id}>
-                <td>{i + 1}</td>
+                <td>
+                  <strong>{i + 1}</strong>
+                </td>
                 <td>{r.competency}</td>
-                <td className="center ok">{r.rating === "Acquis" ? "✔" : ""}</td>
-                <td className="center mid">{r.rating === "Fragile" ? "✔" : ""}</td>
-                <td className="center bad">{r.rating === "Non acquis" ? "✔" : ""}</td>
+                <td className="center">
+                  <span className={`chip ${RATING_CLASS[r.rating]}`}>{r.rating}</span>
+                </td>
                 <td>
                   {r.correct ? (
                     <span className="small">
@@ -143,9 +204,7 @@ export default function ReportView({
           <thead>
             <tr>
               <th>Comportement observé</th>
-              <th className="center">Oui</th>
-              <th className="center">Parfois</th>
-              <th className="center">Non</th>
+              <th className="center">Résultat</th>
               <th>Détail</th>
             </tr>
           </thead>
@@ -153,9 +212,9 @@ export default function ReportView({
             {report.strategies.map((s) => (
               <tr key={s.key}>
                 <td>{s.label}</td>
-                <td className="center">{s.value === "Oui" ? "✔" : ""}</td>
-                <td className="center">{s.value === "Parfois" ? "✔" : ""}</td>
-                <td className="center">{s.value === "Non" ? "✔" : ""}</td>
+                <td className="center">
+                  <span className={`chip ${VALUE_CLASS[s.value]}`}>{s.value}</span>
+                </td>
                 <td className="small">{s.detail}</td>
               </tr>
             ))}
@@ -187,9 +246,9 @@ export default function ReportView({
                   <td>{e.label}</td>
                   <td className="center">
                     {e.status === "observée" ? (
-                      <strong className="bad">Observée ×{e.count}</strong>
+                      <span className="chip chip-bad">Observée ×{e.count}</span>
                     ) : (
-                      <span className="small">Isolée</span>
+                      <span className="chip chip-mid">Isolée</span>
                     )}
                   </td>
                   <td>
@@ -263,7 +322,9 @@ export default function ReportView({
           <tbody>
             {report.plan.map((p) => (
               <tr key={p.order}>
-                <td>{p.order}</td>
+                <td>
+                  <strong>{p.order}</strong>
+                </td>
                 <td>{p.notion}</td>
                 <td>{p.goal}</td>
               </tr>
